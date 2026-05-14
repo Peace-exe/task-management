@@ -1,147 +1,144 @@
-# 🎓 Student Management System
+# Task Manager
 
-A full-stack web application for university and college faculty to manage student records efficiently.
-
-> 🔗 **Repository:** https://github.com/Peace-exe/student-management-system
+A full-stack task management app with a card-based UI, real-time status updates, and localStorage persistence.
 
 ---
 
-## 📁 Project Structure
+## Tech Stack
+
+**Frontend**
+- React 18 + TypeScript
+- Vite
+- React Router DOM
+- Zustand (with `persist` middleware → localStorage)
+- Tailwind CSS + shadcn/ui
+- Axios
+
+**Backend**
+- Node.js + Express.js
+- Mongoose + MongoDB
+
+---
+
+## Project Structure
+
 ```
-student-management-system/
-├── web/        # React + TypeScript frontend
-└── server/     # Node.js + Express backend
+├── client/                  # Frontend (Vite + React)
+│   ├── src/
+│   │   ├── components/      # Shared UI components
+│   │   │   └── ui/          # shadcn/ui components
+│   │   ├── pages/
+│   │   │   ├── Login.tsx
+│   │   │   ├── TaskPage.tsx
+│   │   │   ├── Account.tsx
+│   │   │   └── NotFound.tsx
+│   │   ├── store/
+│   │   │   ├── useAuthStore.ts
+│   │   │   └── useTaskStore.ts
+│   │   ├── hooks/
+│   │   │   └── use-toast.ts
+│   │   └── App.tsx
+│
+└── server/                  # Backend (Express)
+    ├── models/
+    │   └── task.js
+    ├── routes/
+    │   └── taskRouter.js
+    └── index.js
 ```
 
 ---
 
-## ✨ Features
-
-- **Authentication** — Secure login and registration with JWT cookie-based auth
-- **Token Validation** — Auto-redirect to dashboard if session is still valid
-- **Dashboard** — At-a-glance overview of enrollment stats and key metrics
-- **Student Records** — Full CRUD with pagination (10 per page)
-- **Account Management** — View and update profile details
-- **Persistent Session** — Auth state survives page refreshes
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-| Technology | Purpose |
-|---|---|
-| React + Vite | Frontend framework & build tool |
-| TypeScript | Type safety |
-| React Router | Client-side routing |
-| Zustand | Global state (auth + students) |
-| Axios | HTTP client |
-| shadcn/ui + Tailwind CSS | UI components & styling |
-| Sonner | Toast notifications |
-
-### Backend
-| Technology | Purpose |
-|---|---|
-| Node.js + Express | Server & REST API |
-| MongoDB + Mongoose | Database & ODM |
-| JWT | Authentication tokens |
-| bcrypt | Password hashing |
-
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- Node.js `v18+`
-- MongoDB Atlas account or local MongoDB instance
+- Node.js v18+
+- MongoDB (local or Atlas)
 
----
+### 1. Clone the repo
 
-### 1. Clone the repository
 ```bash
-git clone https://github.com/Peace-exe/student-management-system.git
-cd student-management-system
+git clone https://github.com/your-username/task-manager.git
+cd task-manager
 ```
 
----
+### 2. Setup the server
 
-### 2. Set up the Server
 ```bash
 cd server
 npm install
 ```
 
-Create a `.env` file in the `server/` directory:
+Create a `.env` file:
+
 ```env
-MONGODB_URI=your_mongodb_connection_string
 PORT=7001
+MONGO_URI=mongodb://localhost:27017/taskmanager
+JWT_SECRET=your_jwt_secret
 ```
 
 Start the server:
+
 ```bash
-npm start
+npm run dev
 ```
 
-Server will run at `http://localhost:7001`
+### 3. Setup the client
 
-> ⚠️ **Important — MongoDB IP Whitelist**
-> This project uses MongoDB Atlas which restricts connections by IP address. Before the server can connect to the database, your local IP must be whitelisted.
->
-> **Contact the repository owner** [@Peace-exe](https://github.com/Peace-exe) with your IP address to get access.
->
-> Run this command in terminal to get your local IP Address: <u>***curl -4 ifconfig.me***</u>.
->
-> Without this step, the server will start but all API calls will fail with a database connection error.
-
----
-
-### 3. Set up the Frontend
-
-Open a new terminal:
 ```bash
-cd web
+cd client
 npm install
 npm run dev
 ```
 
-App will run at `http://localhost:5173`
+App runs at `http://localhost:5173`.
 
 ---
 
-## 🔐 Auth Flow
+## API Reference
 
-1. On app load, checks for `token` cookie
-2. If present, validates via `GET /profile/validateToken`
-3. If store has user data → redirects to dashboard
-4. Any check failing → stays on login page
+Base URL: `http://localhost:7001`
 
----
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/task/getAllTasks` | Fetch all tasks |
+| `POST` | `/task/createTask` | Create a new task |
+| `PATCH` | `/task/updateTaskStatus/:id` | Update task status |
+| `DELETE` | `/task/deleteTask/:id` | Delete a task |
 
-## 🔗 API Reference
+### Task object
 
-### Auth
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| `POST` | `/signup` | No | Register new account |
-| `POST` | `/login` | No | Login, sets JWT cookie |
-| `POST` | `/logout` | Yes | Logout, clears cookie |
-| `GET` | `/profile` | Yes | Get current user |
-| `GET` | `/profile/validateToken` | Yes | Validate JWT token |
-| `POST` | `/profile/update` | Yes | Update profile fields |
+```json
+{
+  "_id": "64f1a2b3c4d5e6f7a8b9c0d1",
+  "title": "Fix login bug",
+  "description": "Auth token not refreshing on expiry",
+  "status": "in_progress",
+  "createdAt": "2024-01-15T10:30:00.000Z",
+  "updatedAt": "2024-01-15T11:00:00.000Z"
+}
+```
 
-### Students
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| `GET` | `/getAllStudents?page=n` | Yes | Paginated student list |
-| `POST` | `/createStudent` | Yes | Add new student |
-| `POST` | `/updateStudent?rollNum=` | Yes | Update student by roll number |
-| `DELETE` | `/deleteStudent/:rollNum` | Yes | Delete student by roll number |
-
-> Roll number format: `123/ABC/456`
+Valid status values: `todo` | `in_progress` | `done`
 
 ---
 
-## 📄 License
+## Features
 
-This project is for internal/academic use.
+- JWT-based authentication with httpOnly cookies
+- Card-based task UI with color-coded status (yellow → green → white)
+- Inline status update directly on the card (optimistic update + rollback on failure)
+- Zustand store with `persist` middleware — tasks survive page refresh via localStorage
+- API only called on first load; subsequent visits hydrate from localStorage
+- Responsive layout with collapsible sidebar
+
+---
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `PORT` | Server port (default: `7001`) |
+| `MONGO_URI` | MongoDB connection string |
+| `JWT_SECRET` | Secret key for JWT signing |
