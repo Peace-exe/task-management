@@ -53,7 +53,7 @@ const Login = () => {
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:7001/signup", {
+      await axios.post("http://localhost:7001/auth/signup", {
         firstName: regFirstName,
         lastName: regLastName,
         email: regEmail,

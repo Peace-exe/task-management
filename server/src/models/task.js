@@ -25,17 +25,17 @@ const taskSchema = new mongoose.Schema(
     },
     order: {
       type: Number,
-      default: 0, // for drag-and-drop position persistence
+      default: 0, 
     },
   },
   {
-    timestamps: true, // adds createdAt and updatedAt automatically
+    timestamps: true, 
   }
 );
 
-// Index for faster search/filter queries
+
 taskSchema.index({ status: 1 });
-taskSchema.index({ title: 'text', description: 'text' }); // enables $text search
+taskSchema.index({ title: 'text', description: 'text' }); 
 
 const Task = mongoose.model('Task', taskSchema);
 

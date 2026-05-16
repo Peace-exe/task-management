@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "./components/ui/tooltip";
 import Login from "./pages/Login";
 import Overview from "./pages/Overview";
-import StudentRecords from "./pages/TaskPage";
+import TodoPage from "./pages/TaskPage";
 import Account from "./pages/Account";
 import DashboardLayout from "./components/DashboardLayout";
 import NotFound from "./pages/NotFound";
@@ -59,7 +59,7 @@ const App = () => {
           <DashboardLayout>
             <Routes>
               
-              <Route path="/students" element={<StudentRecords />} />
+              <Route path="/tasks" element={<TodoPage />} />
               <Route path="/account" element={<Account />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
