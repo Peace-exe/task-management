@@ -59,7 +59,7 @@ const App = () => {
           <DashboardLayout>
             <Routes>
               
-              <Route path="/tasks" element={<TodoPage />} />
+              <Route index path="/" element={<TodoPage />} />
               <Route path="/account" element={<Account />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

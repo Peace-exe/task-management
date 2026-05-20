@@ -18,7 +18,7 @@ interface DashboardLayoutProps {
 
 const navItems = [
   
-  { label: "Tasks", icon: CheckSquare, path: "/tasks" },
+  { label: "Tasks", icon: CheckSquare, path: "/" },
   { label: "Account", icon: User, path: "/account" },
 ];
 

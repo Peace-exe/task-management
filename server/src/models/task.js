@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'Task must belong to a user'],
+    },
     title: {
       type: String,
       required: [true, 'Task title is required'],
@@ -25,18 +30,19 @@ const taskSchema = new mongoose.Schema(
     },
     order: {
       type: Number,
-      default: 0, 
+      default: 0,
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
+taskSchema.index({ user: 1 });                          
+taskSchema.index({ user: 1, status: 1 });               
+taskSchema.index({ user: 1, title: 'text', description: 'text' }); 
 
-taskSchema.index({ status: 1 });
-taskSchema.index({ title: 'text', description: 'text' }); 
 
-const Task = mongoose.model('Task', taskSchema);
+const Task = mongoose.model("Task",taskSchema);
 
-module.exports = Task;
+module.exports=Task;

@@ -82,9 +82,9 @@ const Login = () => {
           </div>
           <div className="text-center">
             <h1 className="text-xl font-semibold tracking-tight text-foreground">
-              {mode === "login" ? "Sign in to Faculty" : "Create an account"}
+              {mode === "login" ? "Sign in" : "Create an account"}
             </h1>
-            <p className="mt-1 text-sm text-muted-foreground">Student management system</p>
+            <p className="mt-1 text-sm text-muted-foreground">Task management system</p>
           </div>
         </div>
 
